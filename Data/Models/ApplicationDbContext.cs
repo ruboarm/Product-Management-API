@@ -31,10 +31,26 @@ namespace Data.Models
             if (!optionsBuilder.IsConfigured)
             {
                 string path = Directory.GetCurrentDirectory();
+                var appsettingsPath = "";
+                if (!path.Contains("Data"))
+                {
+                    var parent = Directory.GetParent(path);
+                    var folders = parent.GetDirectories();
+
+                    foreach (var folder in folders)
+                        if (folder.Name == "Data")
+                        {
+                            appsettingsPath = folder.FullName;
+                            break;
+                        }
+                }
+                else
+                    appsettingsPath = path;
+
 
                 IConfigurationBuilder builder =
                     new ConfigurationBuilder()
-                        .SetBasePath(path)
+                        .SetBasePath(appsettingsPath)
                         .AddJsonFile("appsettings.json");
 
                 IConfigurationRoot config = builder.Build();
