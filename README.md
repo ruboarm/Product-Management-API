@@ -19,7 +19,7 @@ API supports **Authentication** and **CRUD** operations.
 You can test API functionality by using built in Swagger in which included Authentication security or by other similar tool like **Postman**.\
 After successful login you can keep the authentication by generated **JWT** token and test as well functions which require authentication with **[Authorize]** attribute.
 
-Sample database included in the project as well in DB folder
+Sample database included in the project as well in "db" folder
 
 # Screenshots
 ![Swagger](images/Swagger.png)
