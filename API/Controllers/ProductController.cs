@@ -54,5 +54,37 @@ namespace API.Controllers
 
             return new JsonResult(createdProduct);
         }
+
+
+        // PUT api/<ProductsController>/5
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Put(int id, [FromBody] Product Product)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var existingProduct = await _productService.GetProductByIdAsync(Product.Id);
+                    if (existingProduct == null)
+                        return new NotFoundResult();
+
+                    // ConcurrencyCheck for "Available" property
+                    if (Convert.ToBase64String(existingProduct.RowVersion) != Convert.ToBase64String(Product.RowVersion))
+                        return StatusCode(StatusCodes.Status409Conflict,
+                            new Response { Status = "Error", Message = "Product 'Availability' has been changed already. Please reload the product and try again!" });
+
+                    var success = await _productService.UpdateProductAsync(Product);
+                    if(success)
+                        return BadRequest();
+                }
+                catch (Exception)
+                {
+                    return new JsonResult(null);
+                }
+            }
+
+            return new JsonResult(Product);
+        }
     }
 }
