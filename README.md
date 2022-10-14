@@ -6,9 +6,9 @@ The database migration included in the project, so it's very easy to generate ne
 The project is made by **3-Layer Architecture principles**.
 
 # Layers 
-1. Data Layer
-2. Business Layer
-3. Presentation Layer
+1. Data Layer (Data)
+2. Business Layer (Services)
+3. Presentation Layer (API)
 
 DbContext included in Class Library (Data Layer) which supports Design-Time generation and ConnectionString provided directly in the DbCotext via overriding OnConfiguring method and providing options to DbContextOptionsBuilder.
 
