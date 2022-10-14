@@ -16,13 +16,22 @@ namespace API.Controllers
             _productService = productService;
         }
 
-        // GET: api/<ProductsController>
+        // GET: api/<ProductController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<ProductModel> Products = await _productService.GetProductsAsync();
+            var Products = await _productService.GetProductsAsync();
 
             return new JsonResult(Products);
+        }
+
+        // GET api/<ProductController>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var Product = await _productService.GetProductByIdAsync(id);
+
+            return new JsonResult(Product);
         }
     }
 }
