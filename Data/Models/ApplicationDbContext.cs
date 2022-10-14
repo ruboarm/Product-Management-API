@@ -24,5 +24,25 @@ namespace Data.Models
         {
             base.OnModelCreating(builder);
         }
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                string path = Directory.GetCurrentDirectory();
+
+                IConfigurationBuilder builder =
+                    new ConfigurationBuilder()
+                        .SetBasePath(path)
+                        .AddJsonFile("appsettings.json");
+
+                IConfigurationRoot config = builder.Build();
+
+                string connectionString = config.GetConnectionString("DefaultConnection");
+
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
     }
 }
