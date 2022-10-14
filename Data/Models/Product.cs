@@ -19,6 +19,7 @@ namespace Data.Models
         public string Name { get; set; }
 
         [Required]
+        [ConcurrencyCheck]
         public bool Available { get; set; }
 
         [Required]
