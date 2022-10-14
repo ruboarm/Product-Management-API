@@ -75,7 +75,7 @@ namespace API.Controllers
                             new Response { Status = "Error", Message = "Product 'Availability' has been changed already. Please reload the product and try again!" });
 
                     var success = await _productService.UpdateProductAsync(Product);
-                    if(success)
+                    if (success)
                         return BadRequest();
                 }
                 catch (Exception)
@@ -85,6 +85,26 @@ namespace API.Controllers
             }
 
             return new JsonResult(Product);
+        }
+
+
+        // DELETE api/<ProductsController>/5
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<bool> Delete(int id)
+        {
+            try
+            {
+                var success = await _productService.DeleteProductByIdAsync(id);
+                if (success)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

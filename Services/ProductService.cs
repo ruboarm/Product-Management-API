@@ -104,5 +104,56 @@ namespace Services
 
             return false;
         }
+
+        /// <summary>
+        /// Delete Product from Database
+        /// </summary>
+        /// <param name="product">Product to be deleted.</param>
+        /// <returns></returns>
+        public async Task<bool> DeleteProductAsync(Product product)
+        {
+            if (product != null)
+            {
+                try
+                {
+                    _context.Products.Remove(product);
+                    await _context.SaveChangesAsync();
+
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Delete Product from Database
+        /// </summary>
+        /// <param name="id">Product Id to be deleted.</param>
+        /// <returns></returns>
+        public async Task<bool> DeleteProductByIdAsync(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (product != null)
+            {
+                try
+                {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
     }
 }
