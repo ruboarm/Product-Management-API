@@ -53,5 +53,30 @@ namespace Services
                 return null;
             }
         }
+
+        /// <summary>
+        /// Update given product in Database.
+        /// </summary>
+        /// <param name="product">Given Product to be updated via API.</param>
+        /// <returns></returns>
+        public async Task<bool> CreateProductAsync(Product product)
+        {
+            if (product != null)
+            {
+                try
+                {
+                    await _context.Products.AddAsync(product);
+                    await _context.SaveChangesAsync();
+
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
